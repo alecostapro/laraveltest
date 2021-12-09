@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Models;
+
+use App\Models\Tag;
+use App\Models\Contract;
+use App\Models\Customer;
+use App\Events\OrderDeleted;
+use App\Events\ContractCreated;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Order extends Model
+{
+    use SoftDeletes;
+
+    protected $fillable = ['customer_id','title', 'description', 'cost'];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function contract()
+    {
+        return $this->hasOne(Contract::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function tagList()
+    {
+        return $this->tags()->pluck('tag_id')->toArray();
+    }
+
+    protected $dispatchesEvents = [
+        'created' => ContractCreated::class,
+        'deleting' => OrderDeleted::class,
+    ];
+
+}
