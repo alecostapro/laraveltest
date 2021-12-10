@@ -24,7 +24,7 @@
             <p>{{ $message }}</p>
             @enderror
             <label>Cost</label>
-            <input type="number" name="cost" class="form-control" value="{{ old('cost', $order->cost) }}" required>
+            <input type="number" name="cost" step="0.01" class="form-control" value="{{ old('cost', $order->cost) }}" required>
             @error('cost')
             <p>{{ $message }}</p>
             @enderror

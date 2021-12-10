@@ -58,12 +58,14 @@ const removeItem = document.querySelectorAll('.remove')
     Array.from(removeItem).forEach(function(element) {
         element.addEventListener('click', function() {
             const orderId = element.getAttribute('data-id')
+            if(!confirm("Are you sure?")) {
+                return false;
+            }
             axios.delete('/orders/' + orderId)
             .then(function (response) {
                 window.location.href = "{{ route('orders.index') }}"
             })
             .catch(function (error) {
-                console.log(error);
                 window.location.href = "{{ route('orders.index') }}"
             });
         })

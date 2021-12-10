@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->string('title');
             $table->text('description');
-            $table->bigInteger('cost');
+            $table->double('cost', 8, 2);
             $table->timestamps();
             $table->softDeletes();
 

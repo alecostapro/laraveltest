@@ -32,7 +32,7 @@
             <td>{{ $customer->company }}</td>
             <td><a href="{{ route('customers.edit', $customer) }}">[Edit]</a></td>
             <td>
-                <a href="{{ route('customers.destroy', $customer) }}" onclick="event.preventDefault(); document.getElementById('delete-customer-{{ $customer->id }}-form').submit();">[Delete]</a>
+                <a href="{{ route('customers.destroy', $customer) }}" class="remove" data-id="delete-customer-{{ $customer->id }}-form">[Delete]</a>
                 <form id="delete-customer-{{ $customer->id }}-form" action="{{ route('customers.destroy', $customer) }}" method="POST" style="display: none;">
                     @method('DELETE')
                     @csrf
@@ -52,4 +52,18 @@
 </div>
 
 @endsection
-
+@section('extra-js')
+    <script>
+        const removeItem = document.querySelectorAll('.remove')
+        Array.from(removeItem).forEach(function(element) {
+            element.addEventListener('click', function() {
+                event.preventDefault()
+                const customerId = element.getAttribute('data-id')
+                if(!confirm("Are you sure?")) {
+                    return false;
+                }
+                document.getElementById(customerId).submit();
+            });
+        });
+    </script>
+@endsection
