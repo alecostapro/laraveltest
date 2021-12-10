@@ -7,7 +7,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('customers', 'CustomerController')->except('show');
+Route::resource('customers', 'CustomerController')->except('show')->middleware('can:manage-all');
 Route::resource('orders', 'OrderController')->except('show')->middleware('can:manage-all');
 Route::get('/home', 'HomeController@index')->name('home');
 
